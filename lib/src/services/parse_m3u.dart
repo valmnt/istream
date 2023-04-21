@@ -24,8 +24,10 @@ class ParseM3U {
     return getChannels(m3u);
   }
 
-  Future<List<Channel>> link(Uri url) async {
-    final response = await http.get(url);
+  Future<List<Channel>> link(String url) async {
+    Uri uri = Uri.parse(url);
+
+    final response = await http.get(uri);
     final m3u = await M3uParser.parse(filter(response.body.split('\n')));
     return getChannels(m3u);
   }
