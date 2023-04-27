@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:istream/src/services/parse_m3u.dart';
-import 'package:istream/src/services/preferences.dart';
 import 'package:istream/src/ui/add_m3u.dart';
+import 'package:istream/src/ui/video_player.dart';
 import 'package:provider/provider.dart';
 
 import '../models/m3u_model.dart';
@@ -15,7 +13,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider<M3UModel>(
         create: (context) => M3UModel(),
         child: Builder(builder: (BuildContext privateContext) {
           _provider = Provider.of<M3UModel>(privateContext, listen: false);
@@ -29,18 +27,29 @@ class Home extends StatelessWidget {
 
           _provider.getChannels();
           return Scaffold(
-            body: ListView.builder(
-                itemCount: _provider.channelList.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                      child: ListTile(
-                          title: Text(_provider.channelList[index].title),
-                          subtitle:
-                              Text(_provider.channelList[index].playlists.link),
-                          leading: CircleAvatar(
-                              backgroundImage: NetworkImage(_provider
-                                  .channelList[index].playlists.logo))));
-                }),
+            body: Consumer<M3UModel>(builder: (context, m3u, child) {
+              return ListView.builder(
+                  itemCount: _provider.channelList.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                        child: ListTile(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => VideoPlayer(
+                                        url: _provider
+                                            .channelList[index].playlists.link,
+                                        title:
+                                            _provider.channelList[index].title,
+                                      )));
+                            },
+                            title: Text(_provider.channelList[index].title),
+                            subtitle: Text(
+                                _provider.channelList[index].playlists.link),
+                            leading: CircleAvatar(
+                                backgroundImage: NetworkImage(_provider
+                                    .channelList[index].playlists.logo))));
+                  });
+            }),
             floatingActionButton: AddM3u(),
           );
         }));

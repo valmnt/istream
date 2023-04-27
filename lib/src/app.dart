@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'pokenary',
+      title: 'IStream',
       home: Scaffold(
         body: Center(
           child: Home(),
