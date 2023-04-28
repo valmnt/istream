@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:istream/src/resources/colors.dart';
 
-import 'add_m3u_viewmodel.dart';
-
 const tabs = <Tab>[
   Tab(
     icon: Icon(Icons.cloud_outlined),
@@ -15,19 +13,17 @@ const tabs = <Tab>[
   ),
 ];
 
-class AddM3UView extends StatefulWidget {
-  const AddM3UView({Key? key}) : super(key: key);
+class AddM3U extends StatelessWidget {
+  final Function openPicker;
 
-  @override
-  AddM3UState createState() => AddM3UState();
-}
-
-class AddM3UState extends State<AddM3UView> {
-  final AddM3UViewModel _model = AddM3UViewModel();
+  final Function(String url) getNetworkFile;
 
   final urlController = TextEditingController();
 
   final webFormKey = GlobalKey<FormState>();
+
+  AddM3U({Key? key, required this.openPicker, required this.getNetworkFile})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +78,7 @@ class AddM3UState extends State<AddM3UView> {
                               children: <Widget>[
                                 Center(
                                   child: TextButton(
-                                      onPressed: () => _model.openPicker(),
+                                      onPressed: () => openPicker(),
                                       child: const Text("Open picker")),
                                 ),
                                 Center(
@@ -124,7 +120,7 @@ class AddM3UState extends State<AddM3UView> {
                                                           content: Text(
                                                               'Processing URL')),
                                                     );
-                                                    _model.getNetworkFile(
+                                                    getNetworkFile(
                                                         urlController.text);
                                                   }
                                                 },

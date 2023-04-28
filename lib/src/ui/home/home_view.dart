@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:istream/src/ui/add_m3u/add_m3u_view.dart';
-import 'package:istream/src/ui/video_player/video_player.dart';
+import 'package:istream/src/ui/home/widgets/add_m3u.dart';
+import 'package:istream/src/ui/video_player/video_player_view.dart';
 import 'package:provider/provider.dart';
 import 'home_viewmodel.dart';
 
@@ -30,7 +30,7 @@ class HomeState extends State<HomeView> {
                         child: ListTile(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => VideoPlayer(
+                                  builder: (context) => VideoPlayerView(
                                         url: _model
                                             .channelList[index].playlists.link,
                                         title: _model.channelList[index].title,
@@ -44,7 +44,10 @@ class HomeState extends State<HomeView> {
                                     .channelList[index].playlists.logo))));
                   });
             }),
-            floatingActionButton: const AddM3UView(),
+            floatingActionButton: AddM3U(
+              openPicker: () => {_model.openPicker()},
+              getNetworkFile: (url) => {_model.getNetworkFile(url)},
+            ),
           );
         }));
   }
