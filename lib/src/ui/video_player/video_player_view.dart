@@ -9,17 +9,17 @@ import 'package:provider/provider.dart';
 class VideoPlayerView extends StatefulWidget {
   const VideoPlayerView({super.key, required this.url, required this.title});
 
-  final String? url;
+  final String url;
 
-  final String? title;
+  final String title;
 
   @override
   VideoPlayerState createState() => VideoPlayerState();
 }
 
 class VideoPlayerState extends State<VideoPlayerView> {
-  VideoPlayerViewModel? _videoPlayerViewModel;
-  VlcPlayerController? _videoPlayerController;
+  late VideoPlayerViewModel _videoPlayerViewModel;
+  late VlcPlayerController _vlcPlayerController;
 
   bool isPlaying = true;
 
@@ -27,8 +27,8 @@ class VideoPlayerState extends State<VideoPlayerView> {
   void initState() {
     super.initState();
 
-    _videoPlayerController = VlcPlayerController.network(
-      widget.url ?? "",
+    _vlcPlayerController = VlcPlayerController.network(
+      widget.url,
       hwAcc: HwAcc.full,
       autoPlay: true,
       options: VlcPlayerOptions(),
@@ -42,15 +42,15 @@ class VideoPlayerState extends State<VideoPlayerView> {
 
   @override
   void dispose() async {
-    await _videoPlayerController?.dispose();
-    _videoPlayerViewModel?.dispose();
+    await _vlcPlayerController.dispose();
+    _videoPlayerViewModel.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => {_videoPlayerViewModel?.resetTimer()},
+        onTap: () => {_videoPlayerViewModel.resetTimer()},
         child: ChangeNotifierProvider<VideoPlayerViewModel>(
           create: (_) => VideoPlayerViewModel(),
           child: Scaffold(
@@ -62,7 +62,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
                         child: VlcPlayer(
-                          controller: _videoPlayerController!,
+                          controller: _vlcPlayerController,
                           aspectRatio: 16 / 9,
                           placeholder:
                               const Center(child: CircularProgressIndicator()),
@@ -72,19 +72,17 @@ class VideoPlayerState extends State<VideoPlayerView> {
                     alignment: Alignment.bottomCenter,
                     child: Consumer<VideoPlayerViewModel>(
                         builder: (context, videoPlayerViewModel, child) {
-                      if (_videoPlayerViewModel == null) {
-                        _videoPlayerViewModel = videoPlayerViewModel;
-                        _videoPlayerViewModel?.hideBottomBar();
-                      }
+                      _videoPlayerViewModel = videoPlayerViewModel;
+                      _videoPlayerViewModel.hideBottomBar();
 
                       return Visibility(
-                          visible: _videoPlayerViewModel!.showBottomAppBar,
+                          visible: _videoPlayerViewModel.showBottomAppBar,
                           child: PlayerBottomBar(
                             isPlaying: videoPlayerViewModel.isPaused,
                             onPlayPause: () {
                               videoPlayerViewModel.isPaused
-                                  ? _videoPlayerController?.pause()
-                                  : _videoPlayerController?.play();
+                                  ? _vlcPlayerController.pause()
+                                  : _vlcPlayerController.play();
 
                               videoPlayerViewModel.togglePause();
                             },
@@ -96,9 +94,9 @@ class VideoPlayerState extends State<VideoPlayerView> {
                       child: Consumer<VideoPlayerViewModel>(
                           builder: (context, videoPlayerViewModel, child) {
                         return Visibility(
-                            visible: _videoPlayerViewModel!.showBottomAppBar,
+                            visible: _videoPlayerViewModel.showBottomAppBar,
                             child: PlayerNavBar(
-                              title: widget.title ?? "",
+                              title: widget.title,
                               backButtonIcon: Icons.close,
                               onBackButtonPressed: () => {print("onClose")},
                             ));
