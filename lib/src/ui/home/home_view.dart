@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:istream/src/ui/home/widgets/add_m3u.dart';
 import 'package:istream/src/ui/video_player/video_player_view.dart';
 import 'package:provider/provider.dart';
-import 'home_viewmodel.dart';
+import 'home_view_model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);

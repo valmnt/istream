@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
-import 'package:istream/src/ui/video_player/video_player_viewmodel.dart';
+import 'package:istream/src/ui/video_player/video_player_view_model.dart';
 import 'package:istream/src/ui/video_player/widgets/player_bottom_bar.dart';
 import 'package:istream/src/ui/video_player/widgets/player_navbar.dart';
 import 'package:provider/provider.dart';
