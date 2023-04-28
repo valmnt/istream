@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:istream/src/models/m3u_model.dart';
 import 'package:istream/src/resources/colors.dart';
+
+import 'add_m3u_viewmodel.dart';
 
 const tabs = <Tab>[
   Tab(
@@ -22,11 +23,11 @@ class AddM3UView extends StatefulWidget {
 }
 
 class AddM3UState extends State<AddM3UView> {
-  late AddM3UModel _model;
-
-  var webFormKey = GlobalKey<FormState>();
+  final AddM3UViewModel _model = AddM3UViewModel();
 
   final urlController = TextEditingController();
+
+  final webFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:istream/src/ui/add_m3u.dart';
-import 'package:istream/src/ui/video_player.dart';
+import 'package:istream/src/ui/add_m3u/add_m3u_view.dart';
+import 'package:istream/src/ui/video_player/video_player.dart';
 import 'package:provider/provider.dart';
+import 'home_viewmodel.dart';
 
-import '../models/m3u_model.dart';
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
 
-class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+  @override
+  HomeState createState() => HomeState();
+}
 
-  final ScrollController _scrollController = ScrollController();
-  late AddM3UModel _model;
+class HomeState extends State<HomeView> {
+  late HomeViewModel _model;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AddM3UModel>(
-        create: (context) => AddM3UModel(),
+    return ChangeNotifierProvider<HomeViewModel>(
+        create: (context) => HomeViewModel(),
         child: Builder(builder: (BuildContext privateContext) {
-          _model = Provider.of<AddM3UModel>(privateContext, listen: false);
-
-          _scrollController.addListener(() {
-            if (_scrollController.position.pixels ==
-                _scrollController.position.maxScrollExtent) {
-              _model.getChannels();
-            }
-          });
-
+          _model = Provider.of<HomeViewModel>(privateContext, listen: true);
           _model.getChannels();
           return Scaffold(
-            body: Consumer<AddM3UModel>(builder: (context, m3u, child) {
+            body: Consumer<HomeViewModel>(builder: (context, m3u, child) {
               return ListView.builder(
                   itemCount: _model.channelList.length,
                   itemBuilder: (context, index) {
@@ -49,7 +44,7 @@ class Home extends StatelessWidget {
                                     .channelList[index].playlists.logo))));
                   });
             }),
-            floatingActionButton: AddM3UView(),
+            floatingActionButton: const AddM3UView(),
           );
         }));
   }

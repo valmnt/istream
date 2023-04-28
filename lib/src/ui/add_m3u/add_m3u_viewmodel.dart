@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:istream/src/services/parse_m3u.dart';
 import 'package:istream/src/services/preferences.dart';
 
-class AddM3UModel extends ChangeNotifier {
-  late List<Channel> channelList = [];
-
+class AddM3UViewModel extends ChangeNotifier {
   void openPicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -25,11 +23,6 @@ class AddM3UModel extends ChangeNotifier {
 
   void getNetworkFile(String url) async {
     Preferences().addMultipleChannels(await ParseM3U().link(url));
-    notifyListeners();
-  }
-
-  void getChannels() async {
-    channelList += await Preferences().getChannels();
     notifyListeners();
   }
 }
