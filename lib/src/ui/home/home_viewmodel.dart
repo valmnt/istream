@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:istream/src/services/parse_m3u.dart';
-import 'package:istream/src/services/preferences.dart';
+import 'package:istream/src/models/channel.dart';
+import 'package:istream/src/services/preferences_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
+  final PreferencesService _preferencesService = PreferencesService();
+
   late List<Channel> channelList = [];
 
   void getChannels() async {
-    channelList += await Preferences().getChannels();
+    channelList += await _preferencesService.getChannels();
     notifyListeners();
   }
 }

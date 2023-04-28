@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:istream/src/services/parse_m3u.dart';
-import 'package:istream/src/services/preferences.dart';
+import 'package:istream/src/services/parse_m3u_service.dart';
+import 'package:istream/src/services/preferences_service.dart';
 
 class AddM3UViewModel extends ChangeNotifier {
+  final PreferencesService _preferencesService = PreferencesService();
+  final ParseM3UService _parseM3UService = ParseM3UService();
+
   void openPicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -14,7 +17,8 @@ class AddM3UViewModel extends ChangeNotifier {
 
     if (result != null) {
       File file = File(result.files.single.path ?? "");
-      Preferences().addMultipleChannels(await ParseM3U().file(file));
+      _preferencesService
+          .addMultipleChannels(await _parseM3UService.file(file));
       notifyListeners();
     } else {
       // User canceled the picker
@@ -22,7 +26,7 @@ class AddM3UViewModel extends ChangeNotifier {
   }
 
   void getNetworkFile(String url) async {
-    Preferences().addMultipleChannels(await ParseM3U().link(url));
+    _preferencesService.addMultipleChannels(await _parseM3UService.link(url));
     notifyListeners();
   }
 }

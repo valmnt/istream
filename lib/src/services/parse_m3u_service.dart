@@ -1,23 +1,11 @@
 import 'dart:io';
 
+import 'package:istream/src/models/channel.dart';
+import 'package:istream/src/models/playlist.dart';
 import 'package:m3u_nullsafe/m3u_nullsafe.dart';
 import 'package:http/http.dart' as http;
 
-class Playlist {
-  const Playlist({required this.link, required this.logo});
-
-  final String link;
-  final String logo;
-}
-
-class Channel {
-  const Channel(this.playlists, this.title);
-
-  final Playlist playlists;
-  final String title;
-}
-
-class ParseM3U {
+class ParseM3UService {
   Future<List<Channel>> file(File file) async {
     final lines = await file.readAsLines();
     final m3u = await parseFile(filter(lines));
