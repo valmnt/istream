@@ -5,7 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:istream/src/services/parse_m3u.dart';
 import 'package:istream/src/services/preferences.dart';
 
-class M3UModel extends ChangeNotifier {
+class AddM3UModel extends ChangeNotifier {
   late List<Channel> channelList = [];
 
   void openPicker() async {

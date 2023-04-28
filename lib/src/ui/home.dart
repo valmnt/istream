@@ -9,48 +9,47 @@ class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
   final ScrollController _scrollController = ScrollController();
-  late M3UModel _provider;
+  late AddM3UModel _model;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<M3UModel>(
-        create: (context) => M3UModel(),
+    return ChangeNotifierProvider<AddM3UModel>(
+        create: (context) => AddM3UModel(),
         child: Builder(builder: (BuildContext privateContext) {
-          _provider = Provider.of<M3UModel>(privateContext, listen: false);
+          _model = Provider.of<AddM3UModel>(privateContext, listen: false);
 
           _scrollController.addListener(() {
             if (_scrollController.position.pixels ==
                 _scrollController.position.maxScrollExtent) {
-              _provider.getChannels();
+              _model.getChannels();
             }
           });
 
-          _provider.getChannels();
+          _model.getChannels();
           return Scaffold(
-            body: Consumer<M3UModel>(builder: (context, m3u, child) {
+            body: Consumer<AddM3UModel>(builder: (context, m3u, child) {
               return ListView.builder(
-                  itemCount: _provider.channelList.length,
+                  itemCount: _model.channelList.length,
                   itemBuilder: (context, index) {
                     return Card(
                         child: ListTile(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => VideoPlayer(
-                                        url: _provider
+                                        url: _model
                                             .channelList[index].playlists.link,
-                                        title:
-                                            _provider.channelList[index].title,
+                                        title: _model.channelList[index].title,
                                       )));
                             },
-                            title: Text(_provider.channelList[index].title),
-                            subtitle: Text(
-                                _provider.channelList[index].playlists.link),
+                            title: Text(_model.channelList[index].title),
+                            subtitle:
+                                Text(_model.channelList[index].playlists.link),
                             leading: CircleAvatar(
-                                backgroundImage: NetworkImage(_provider
+                                backgroundImage: NetworkImage(_model
                                     .channelList[index].playlists.logo))));
                   });
             }),
-            floatingActionButton: AddM3u(),
+            floatingActionButton: AddM3UView(),
           );
         }));
   }

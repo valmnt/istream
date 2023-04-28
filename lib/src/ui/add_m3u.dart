@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:istream/src/models/m3u_model.dart';
 import 'package:istream/src/resources/colors.dart';
-import 'package:provider/provider.dart';
 
 const tabs = <Tab>[
   Tab(
@@ -16,10 +14,15 @@ const tabs = <Tab>[
   ),
 ];
 
-class AddM3u extends StatelessWidget {
-  AddM3u({Key? key}) : super(key: key);
+class AddM3UView extends StatefulWidget {
+  const AddM3UView({Key? key}) : super(key: key);
 
-  late M3UModel _provider;
+  @override
+  AddM3UState createState() => AddM3UState();
+}
+
+class AddM3UState extends State<AddM3UView> {
+  late AddM3UModel _model;
 
   var webFormKey = GlobalKey<FormState>();
 
@@ -78,7 +81,7 @@ class AddM3u extends StatelessWidget {
                               children: <Widget>[
                                 Center(
                                   child: TextButton(
-                                      onPressed: () => M3UModel().openPicker(),
+                                      onPressed: () => _model.openPicker(),
                                       child: const Text("Open picker")),
                                 ),
                                 Center(
@@ -120,7 +123,7 @@ class AddM3u extends StatelessWidget {
                                                           content: Text(
                                                               'Processing URL')),
                                                     );
-                                                    M3UModel().getNetworkFile(
+                                                    _model.getNetworkFile(
                                                         urlController.text);
                                                   }
                                                 },
