@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 class VideoPlayerViewModel extends ChangeNotifier {
   bool showBottomAppBar = true;
   bool _isPaused = true;
-  Timer? _timer;
+  Timer? timer;
 
   bool get isPaused => _isPaused;
+
+  @override
+  void dispose() {
+    timer = null;
+    super.dispose();
+  }
 
   set isPaused(bool value) {
     _isPaused = value;
@@ -20,16 +26,18 @@ class VideoPlayerViewModel extends ChangeNotifier {
   }
 
   void _startTimer() {
-    _timer?.cancel();
+    timer?.cancel();
     showBottomAppBar = true;
     notifyListeners();
     hideBottomBar();
   }
 
   void hideBottomBar() {
-    _timer = Timer(const Duration(seconds: 3), () {
-      showBottomAppBar = false;
-      notifyListeners();
+    timer = Timer(const Duration(seconds: 3), () {
+      if (timer != null) {
+        showBottomAppBar = false;
+        notifyListeners();
+      }
     });
   }
 

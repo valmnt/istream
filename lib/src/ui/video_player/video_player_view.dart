@@ -18,10 +18,11 @@ class VideoPlayerView extends StatefulWidget {
 }
 
 class VideoPlayerState extends State<VideoPlayerView> {
-  late VideoPlayerViewModel _videoPlayerViewModel;
+  final VideoPlayerViewModel _videoPlayerViewModel = VideoPlayerViewModel();
   late VlcPlayerController _vlcPlayerController;
 
   bool isPlaying = true;
+  bool isDisposing = false;
 
   @override
   void initState() {
@@ -42,9 +43,14 @@ class VideoPlayerState extends State<VideoPlayerView> {
 
   @override
   void dispose() async {
-    await _vlcPlayerController.dispose();
-    _videoPlayerViewModel.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp
+    ]);
     super.dispose();
+    await _vlcPlayerController.dispose();
   }
 
   @override
@@ -52,8 +58,9 @@ class VideoPlayerState extends State<VideoPlayerView> {
     return GestureDetector(
         onTap: () => {_videoPlayerViewModel.resetTimer()},
         child: ChangeNotifierProvider<VideoPlayerViewModel>(
-          create: (_) => VideoPlayerViewModel(),
+          create: (_) => _videoPlayerViewModel,
           child: Scaffold(
+            backgroundColor: Colors.black,
             body: Center(
               child: Stack(
                 children: [
@@ -71,20 +78,19 @@ class VideoPlayerState extends State<VideoPlayerView> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Consumer<VideoPlayerViewModel>(
-                        builder: (context, videoPlayerViewModel, child) {
-                      _videoPlayerViewModel = videoPlayerViewModel;
-                      _videoPlayerViewModel.hideBottomBar();
+                        builder: (context, viewModel, child) {
+                      viewModel.hideBottomBar();
 
                       return Visibility(
                           visible: _videoPlayerViewModel.showBottomAppBar,
                           child: PlayerBottomBar(
-                            isPlaying: videoPlayerViewModel.isPaused,
+                            isPlaying: viewModel.isPaused,
                             onPlayPause: () {
-                              videoPlayerViewModel.isPaused
+                              viewModel.isPaused
                                   ? _vlcPlayerController.pause()
                                   : _vlcPlayerController.play();
 
-                              videoPlayerViewModel.togglePause();
+                              viewModel.togglePause();
                             },
                           ));
                     }),
@@ -92,13 +98,16 @@ class VideoPlayerState extends State<VideoPlayerView> {
                   Align(
                       alignment: Alignment.topCenter,
                       child: Consumer<VideoPlayerViewModel>(
-                          builder: (context, videoPlayerViewModel, child) {
+                          builder: (context, viewModel, child) {
                         return Visibility(
                             visible: _videoPlayerViewModel.showBottomAppBar,
                             child: PlayerNavBar(
                               title: widget.title,
                               backButtonIcon: Icons.close,
-                              onBackButtonPressed: () => {print("onClose")},
+                              onBackButtonPressed: () => {
+                                _vlcPlayerController.pause(),
+                                Navigator.of(context).pop()
+                              },
                             ));
                       })),
                 ],

@@ -22,26 +22,25 @@ class HomeState extends State<HomeView> {
           _model = Provider.of<HomeViewModel>(privateContext, listen: true);
           _model.getChannels();
           return Scaffold(
-            body: Consumer<HomeViewModel>(builder: (context, m3u, child) {
+            body: Consumer<HomeViewModel>(builder: (context, viewModel, child) {
               return ListView.builder(
-                  itemCount: _model.channelList.length,
+                  itemCount: viewModel.channelList.length,
                   itemBuilder: (context, index) {
                     return Card(
                         child: ListTile(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => VideoPlayerView(
-                                        url: _model
+                                        url: viewModel
                                             .channelList[index].playlists.link,
-                                        title: _model.channelList[index].title,
+                                        title:
+                                            viewModel.channelList[index].title,
                                       )));
                             },
-                            title: Text(_model.channelList[index].title),
-                            subtitle:
-                                Text(_model.channelList[index].playlists.link),
-                            leading: CircleAvatar(
-                                backgroundImage: NetworkImage(_model
-                                    .channelList[index].playlists.logo))));
+                            title: Text(viewModel.channelList[index].title),
+                            subtitle: Text(
+                                viewModel.channelList[index].playlists.link),
+                            leading: const CircleAvatar()));
                   });
             }),
             floatingActionButton: AddM3U(
