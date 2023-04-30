@@ -33,11 +33,11 @@ class VideoPlayerViewModel extends ChangeNotifier {
   }
 
   void hideBottomBar() {
-    timer = Timer(const Duration(seconds: 3), () {
-      if (timer != null) {
-        showBottomAppBar = false;
-        notifyListeners();
-      }
+    timer = Timer(const Duration(seconds: 10), () {
+      // if (timer != null) {
+      //   showBottomAppBar = false;
+      //   notifyListeners();
+      // }
     });
   }
 

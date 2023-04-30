@@ -22,26 +22,30 @@ class PlayerTopBar extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [Colors.black, Colors.transparent],
-          stops: [0.5, 0.7],
+          stops: [0.2, 0.6],
         ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (backButtonIcon != null && onBackButtonPressed != null)
-            IconButton(
-              color: Colors.white,
-              icon: Icon(backButtonIcon),
-              onPressed: onBackButtonPressed,
-            )
+            SizedBox(
+                width: MediaQuery.of(context).size.width * 0.15,
+                child: IconButton(
+                  color: Colors.white,
+                  icon: Icon(backButtonIcon),
+                  onPressed: onBackButtonPressed,
+                ))
           else
-            const SizedBox(width: 48),
-          Text(
-            title,
-            style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          const SizedBox(width: 48),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
         ],
       ),
     );
