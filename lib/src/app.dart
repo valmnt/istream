@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:istream/src/ui/home.dart';
+import 'package:istream/src/ui/home/home_view.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'IStream',
       home: Scaffold(
         body: Center(
-          child: Home(),
+          child: HomeView(),
         ),
       ),
       debugShowCheckedModeBanner: false,

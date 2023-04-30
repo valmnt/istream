@@ -1,7 +1,8 @@
-import 'package:istream/src/services/parse_m3u.dart';
+import 'package:istream/src/models/channel.dart';
+import 'package:istream/src/models/playlist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Preferences {
+class PreferencesService {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   void addChannel(Channel channel) async {
