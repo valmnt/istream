@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+import 'package:istream/src/resources/colors.dart';
 import 'package:istream/src/ui/video_player/video_player_view_model.dart';
 import 'package:istream/src/ui/video_player/widgets/player_bottom_bar.dart';
 import 'package:istream/src/ui/video_player/widgets/player_top_bar.dart';
@@ -78,7 +79,9 @@ class VideoPlayerState extends State<VideoPlayerView> {
                               virtualDisplay: false,
                               aspectRatio: 16 / 9,
                               placeholder: const Center(
-                                  child: CircularProgressIndicator()),
+                                  child: CircularProgressIndicator(
+                                color: primary,
+                              )),
                             )),
                       ),
                       Positioned.fill(
@@ -115,7 +118,19 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                 stream: _positionStream,
                                 builder: (BuildContext context,
                                     AsyncSnapshot<Duration> snapshot) {
+                                  if (_vlcPlayerController.value.duration ==
+                                              const Duration(seconds: 0) &&
+                                          snapshot.data ==
+                                              const Duration(seconds: 0) ||
+                                      snapshot.data == null) {
+                                    return Container();
+                                  }
                                   return PlayerBottomBar(
+                                    isLive:
+                                        _vlcPlayerController.value.duration ==
+                                                const Duration(seconds: 0) &&
+                                            snapshot.data !=
+                                                const Duration(seconds: 0),
                                     totalProgression:
                                         _vlcPlayerController.value.duration,
                                     progression: snapshot.data ??
