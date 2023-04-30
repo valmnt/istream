@@ -12,15 +12,15 @@ class HomeView extends StatefulWidget {
 }
 
 class HomeState extends State<HomeView> {
-  late HomeViewModel _model;
+  late HomeViewModel? _homeViewModel;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeViewModel>(
         create: (context) => HomeViewModel(),
         child: Builder(builder: (BuildContext privateContext) {
-          _model = Provider.of<HomeViewModel>(privateContext, listen: true);
-          _model.getChannels();
+          _homeViewModel =
+              Provider.of<HomeViewModel>(privateContext, listen: true);
           return Scaffold(
             body: Consumer<HomeViewModel>(builder: (context, viewModel, child) {
               return ListView.builder(
@@ -44,8 +44,8 @@ class HomeState extends State<HomeView> {
                   });
             }),
             floatingActionButton: AddM3U(
-              openPicker: () => {_model.openPicker()},
-              getNetworkFile: (url) => {_model.getNetworkFile(url)},
+              openPicker: () => {_homeViewModel?.openPicker()},
+              getNetworkFile: (url) => {_homeViewModel?.getNetworkFile(url)},
             ),
           );
         }));

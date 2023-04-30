@@ -22,7 +22,7 @@ class HomeViewModel extends ChangeNotifier {
       File file = File(result.files.single.path ?? "");
       _preferencesService
           .addMultipleChannels(await _parseM3UService.file(file));
-      notifyListeners();
+      getChannels();
     } else {
       // User canceled the picker
     }
