@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:istream/src/ui/video_player/video_player_view_model.dart';
 import 'package:istream/src/ui/video_player/widgets/player_bottom_bar.dart';
-import 'package:istream/src/ui/video_player/widgets/player_navbar.dart';
+import 'package:istream/src/ui/video_player/widgets/player_top_bar.dart';
 import 'package:provider/provider.dart';
 
 class VideoPlayerView extends StatefulWidget {
@@ -101,7 +101,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
                           builder: (context, viewModel, child) {
                         return Visibility(
                             visible: _videoPlayerViewModel.showBottomAppBar,
-                            child: PlayerNavBar(
+                            child: PlayerTopBar(
                               title: widget.title,
                               backButtonIcon: Icons.close,
                               onBackButtonPressed: () => {

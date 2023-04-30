@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PlayerNavBar extends StatelessWidget {
+class PlayerTopBar extends StatelessWidget {
   final String title;
   final IconData? backButtonIcon;
   final Function()? onBackButtonPressed;
 
-  const PlayerNavBar({
+  const PlayerTopBar({
     super.key,
     required this.title,
     this.backButtonIcon,
