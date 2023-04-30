@@ -63,7 +63,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
           _videoPlayerViewModel =
               Provider.of<VideoPlayerViewModel>(privateContext, listen: true);
           return GestureDetector(
-              onTap: () => {_videoPlayerViewModel.toggleBottomBar()},
+              onTap: () => {_videoPlayerViewModel.toggleOverlay()},
               child: Scaffold(
                 backgroundColor: Colors.black,
                 body: Center(
@@ -75,17 +75,41 @@ class VideoPlayerState extends State<VideoPlayerView> {
                             height: MediaQuery.of(context).size.height,
                             child: VlcPlayer(
                               controller: _vlcPlayerController,
+                              virtualDisplay: false,
                               aspectRatio: 16 / 9,
                               placeholder: const Center(
                                   child: CircularProgressIndicator()),
                             )),
                       ),
+                      Positioned.fill(
+                          child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        color: _videoPlayerViewModel.showOverlay
+                            ? Colors.black.withOpacity(0.7)
+                            : Colors.transparent,
+                      )),
+                      Align(
+                          alignment: Alignment.topCenter,
+                          child: Consumer<VideoPlayerViewModel>(
+                              builder: (context, viewModel, child) {
+                            return Visibility(
+                                visible: viewModel.showOverlay,
+                                child: PlayerTopBar(
+                                  title: widget.title,
+                                  backButtonIcon: Icons.close,
+                                  onBackButtonPressed: () => {
+                                    _vlcPlayerController.pause(),
+                                    Navigator.of(context).pop()
+                                  },
+                                ));
+                          })),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Consumer<VideoPlayerViewModel>(
                             builder: (context, viewModel, child) {
                           return Visibility(
-                              visible: viewModel.showBottomAppBar,
+                              visible: viewModel.showOverlay,
                               maintainState: true,
                               child: StreamBuilder<Duration>(
                                 stream: _positionStream,
@@ -112,21 +136,6 @@ class VideoPlayerState extends State<VideoPlayerView> {
                               ));
                         }),
                       ),
-                      Align(
-                          alignment: Alignment.topCenter,
-                          child: Consumer<VideoPlayerViewModel>(
-                              builder: (context, viewModel, child) {
-                            return Visibility(
-                                visible: viewModel.showBottomAppBar,
-                                child: PlayerTopBar(
-                                  title: widget.title,
-                                  backButtonIcon: Icons.close,
-                                  onBackButtonPressed: () => {
-                                    _vlcPlayerController.pause(),
-                                    Navigator.of(context).pop()
-                                  },
-                                ));
-                          })),
                     ],
                   ),
                 ),
