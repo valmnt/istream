@@ -21,8 +21,8 @@ class HomeState extends State<HomeView> {
         child: Builder(builder: (BuildContext privateContext) {
           _homeViewModel =
               Provider.of<HomeViewModel>(privateContext, listen: true);
-          if (_homeViewModel!.channelList.isEmpty) {
-            _homeViewModel?.getChannels();
+          if (_homeViewModel.channelList.isEmpty) {
+            _homeViewModel.getChannels();
           }
           return Scaffold(
             body: Consumer<HomeViewModel>(builder: (context, viewModel, child) {
