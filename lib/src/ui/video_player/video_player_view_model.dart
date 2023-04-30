@@ -3,21 +3,27 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class VideoPlayerViewModel extends ChangeNotifier {
-  bool showBottomAppBar = true;
   bool _isPaused = true;
+  bool _isDismissed = false;
+  bool showBottomAppBar = false;
   Timer? timer;
 
   bool get isPaused => _isPaused;
 
-  @override
-  void dispose() {
-    timer = null;
-    super.dispose();
-  }
-
   set isPaused(bool value) {
     _isPaused = value;
     notifyListeners();
+  }
+
+  VideoPlayerViewModel() {
+    toggleBottomBar();
+  }
+
+  @override
+  void dispose() {
+    _isDismissed = true;
+    timer = null;
+    super.dispose();
   }
 
   void togglePause() {
@@ -25,23 +31,15 @@ class VideoPlayerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _startTimer() {
-    timer?.cancel();
-    showBottomAppBar = true;
-    notifyListeners();
-    hideBottomBar();
-  }
-
-  void hideBottomBar() {
-    timer = Timer(const Duration(seconds: 10), () {
-      // if (timer != null) {
-      //   showBottomAppBar = false;
-      //   notifyListeners();
-      // }
-    });
-  }
-
-  void resetTimer() {
-    _startTimer();
+  void toggleBottomBar() async {
+    if (!showBottomAppBar) {
+      showBottomAppBar = true;
+      notifyListeners();
+      await Future.delayed(const Duration(seconds: 4));
+      if (!_isDismissed) {
+        showBottomAppBar = false;
+        notifyListeners();
+      }
+    }
   }
 }

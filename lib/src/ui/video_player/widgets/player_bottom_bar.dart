@@ -23,11 +23,35 @@ class PlayerBottomBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.4),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
-          colors: [Colors.black, Colors.transparent],
-          stops: [0.6, 2],
+          colors: [
+            Colors.black.withOpacity(0.95),
+            Colors.black.withOpacity(0.85),
+            Colors.black.withOpacity(0.75),
+            Colors.black.withOpacity(0.65),
+            Colors.black.withOpacity(0.55),
+            Colors.black.withOpacity(0.45),
+            Colors.black.withOpacity(0.35),
+            Colors.black.withOpacity(0.25),
+            Colors.black.withOpacity(0.15),
+            Colors.black.withOpacity(0.05),
+            Colors.transparent,
+          ],
+          stops: const [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1.0,
+          ],
         ),
       ),
       height: MediaQuery.of(context).size.height * 0.30,

@@ -57,15 +57,14 @@ class VideoPlayerState extends State<VideoPlayerView> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () => {_videoPlayerViewModel.resetTimer()},
-        child: ChangeNotifierProvider<VideoPlayerViewModel>(
-            create: (_) => VideoPlayerViewModel(),
-            child: Builder(builder: (BuildContext privateContext) {
-              _videoPlayerViewModel = Provider.of<VideoPlayerViewModel>(
-                  privateContext,
-                  listen: true);
-              return Scaffold(
+    return ChangeNotifierProvider<VideoPlayerViewModel>(
+        create: (_) => VideoPlayerViewModel(),
+        child: Builder(builder: (BuildContext privateContext) {
+          _videoPlayerViewModel =
+              Provider.of<VideoPlayerViewModel>(privateContext, listen: true);
+          return GestureDetector(
+              onTap: () => {_videoPlayerViewModel.toggleBottomBar()},
+              child: Scaffold(
                 backgroundColor: Colors.black,
                 body: Center(
                   child: Stack(
@@ -85,10 +84,9 @@ class VideoPlayerState extends State<VideoPlayerView> {
                         alignment: Alignment.bottomCenter,
                         child: Consumer<VideoPlayerViewModel>(
                             builder: (context, viewModel, child) {
-                          viewModel.hideBottomBar();
-
                           return Visibility(
-                              visible: _videoPlayerViewModel.showBottomAppBar,
+                              visible: viewModel.showBottomAppBar,
+                              maintainState: true,
                               child: StreamBuilder<Duration>(
                                 stream: _positionStream,
                                 builder: (BuildContext context,
@@ -119,7 +117,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
                           child: Consumer<VideoPlayerViewModel>(
                               builder: (context, viewModel, child) {
                             return Visibility(
-                                visible: _videoPlayerViewModel.showBottomAppBar,
+                                visible: viewModel.showBottomAppBar,
                                 child: PlayerTopBar(
                                   title: widget.title,
                                   backButtonIcon: Icons.close,
@@ -132,7 +130,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
                     ],
                   ),
                 ),
-              );
-            })));
+              ));
+        }));
   }
 }
