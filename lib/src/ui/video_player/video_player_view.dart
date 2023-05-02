@@ -120,17 +120,16 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                           snapshot.data ==
                                               const Duration(seconds: 0) ||
                                       snapshot.data == null) {
-                                    return Center(
+                                    return const Center(
                                         child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.22,
-                                      child: const LoadingIndicator(
-                                          indicatorType:
-                                              Indicator.circleStrokeSpin,
-                                          colors: [primary]),
+                                      width: 50,
+                                      height: 52,
+                                      child: LoadingIndicator(
+                                        indicatorType:
+                                            Indicator.circleStrokeSpin,
+                                        colors: [primary],
+                                        strokeWidth: 5,
+                                      ),
                                     ));
                                   }
                                   if (!isLoaded) isLoaded = true;
