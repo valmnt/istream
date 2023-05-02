@@ -126,6 +126,19 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                     );
                                   }
                                   if (!isLoaded) isLoaded = true;
+                                  if (_vlcPlayerController
+                                                  .value.duration.inSeconds -
+                                              1 ==
+                                          snapshot.data?.inSeconds &&
+                                      _vlcPlayerController
+                                              .value.duration.inSeconds !=
+                                          0 &&
+                                      isLoaded) {
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                      Navigator.of(context).pop();
+                                    });
+                                  }
                                   return Visibility(
                                       visible: viewModel.showOverlay,
                                       child: PlayerBottomBar(
