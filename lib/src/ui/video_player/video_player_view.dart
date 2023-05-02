@@ -5,6 +5,7 @@ import 'package:istream/src/resources/colors.dart';
 import 'package:istream/src/ui/video_player/video_player_view_model.dart';
 import 'package:istream/src/ui/video_player/widgets/player_bottom_bar.dart';
 import 'package:istream/src/ui/video_player/widgets/player_top_bar.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 class VideoPlayerView extends StatefulWidget {
@@ -22,7 +23,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
   late VlcPlayerController _vlcPlayerController;
   late final Stream<Duration> _positionStream;
 
-  bool isPlaying = true;
+  bool isLoaded = false;
 
   @override
   void initState() {
@@ -78,10 +79,6 @@ class VideoPlayerState extends State<VideoPlayerView> {
                               controller: _vlcPlayerController,
                               virtualDisplay: false,
                               aspectRatio: 16 / 9,
-                              placeholder: const Center(
-                                  child: CircularProgressIndicator(
-                                color: primary,
-                              )),
                             )),
                       ),
                       Positioned.fill(
@@ -112,7 +109,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
                         child: Consumer<VideoPlayerViewModel>(
                             builder: (context, viewModel, child) {
                           return Visibility(
-                              visible: viewModel.showOverlay,
+                              visible: viewModel.showOverlay || !isLoaded,
                               maintainState: true,
                               child: StreamBuilder<Duration>(
                                 stream: _positionStream,
@@ -123,30 +120,44 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                           snapshot.data ==
                                               const Duration(seconds: 0) ||
                                       snapshot.data == null) {
-                                    return Container();
+                                    return Center(
+                                        child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.22,
+                                      child: const LoadingIndicator(
+                                          indicatorType:
+                                              Indicator.circleStrokeSpin,
+                                          colors: [primary]),
+                                    ));
                                   }
-                                  return PlayerBottomBar(
-                                    isLive:
-                                        _vlcPlayerController.value.duration ==
+                                  if (!isLoaded) isLoaded = true;
+                                  return Visibility(
+                                      visible: viewModel.showOverlay,
+                                      child: PlayerBottomBar(
+                                        isLive: _vlcPlayerController
+                                                    .value.duration ==
                                                 const Duration(seconds: 0) &&
                                             snapshot.data !=
                                                 const Duration(seconds: 0),
-                                    totalProgression:
-                                        _vlcPlayerController.value.duration,
-                                    progression: snapshot.data ??
-                                        const Duration(seconds: 0),
-                                    isPlaying: viewModel.isPaused,
-                                    onPlayPause: () {
-                                      viewModel.isPaused
-                                          ? _vlcPlayerController.pause()
-                                          : _vlcPlayerController.play();
+                                        totalProgression:
+                                            _vlcPlayerController.value.duration,
+                                        progression: snapshot.data ??
+                                            const Duration(seconds: 0),
+                                        isPlaying: viewModel.isPaused,
+                                        onPlayPause: () {
+                                          viewModel.isPaused
+                                              ? _vlcPlayerController.pause()
+                                              : _vlcPlayerController.play();
 
-                                      viewModel.togglePause();
-                                    },
-                                    onSeek: (duration) {
-                                      _vlcPlayerController.seekTo(duration);
-                                    },
-                                  );
+                                          viewModel.togglePause();
+                                        },
+                                        onSeek: (duration) {
+                                          _vlcPlayerController.seekTo(duration);
+                                        },
+                                      ));
                                 },
                               ));
                         }),
