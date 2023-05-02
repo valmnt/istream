@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:istream/src/resources/colors.dart';
+import 'package:istream/src/shared/loader.dart';
 import 'package:istream/src/ui/video_player/video_player_view_model.dart';
 import 'package:istream/src/ui/video_player/widgets/player_bottom_bar.dart';
 import 'package:istream/src/ui/video_player/widgets/player_top_bar.dart';
@@ -121,16 +122,8 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                               const Duration(seconds: 0) ||
                                       snapshot.data == null) {
                                     return const Center(
-                                        child: SizedBox(
-                                      width: 50,
-                                      height: 52,
-                                      child: LoadingIndicator(
-                                        indicatorType:
-                                            Indicator.circleStrokeSpin,
-                                        colors: [primary],
-                                        strokeWidth: 5,
-                                      ),
-                                    ));
+                                      child: Loader(width: 50, height: 52),
+                                    );
                                   }
                                   if (!isLoaded) isLoaded = true;
                                   return Visibility(
