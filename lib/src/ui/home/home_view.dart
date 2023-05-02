@@ -12,7 +12,7 @@ class HomeView extends StatefulWidget {
 }
 
 class HomeState extends State<HomeView> {
-  late HomeViewModel? _homeViewModel;
+  late HomeViewModel _homeViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,13 @@ class HomeState extends State<HomeView> {
         child: Builder(builder: (BuildContext privateContext) {
           _homeViewModel =
               Provider.of<HomeViewModel>(privateContext, listen: true);
-          if (_homeViewModel!.channelList.isEmpty) {
-            _homeViewModel?.getChannels();
+          if (_homeViewModel.channelList.isEmpty) {
+            _homeViewModel.getChannels();
           }
           return Scaffold(
             body: Consumer<HomeViewModel>(builder: (context, viewModel, child) {
               return ListView.builder(
-                  itemCount: viewModel.channelList.length,
+                  itemCount: _homeViewModel.channelList.length,
                   itemBuilder: (context, index) {
                     return Card(
                         child: ListTile(
@@ -47,8 +47,8 @@ class HomeState extends State<HomeView> {
                   });
             }),
             floatingActionButton: AddM3U(
-              openPicker: () => {_homeViewModel?.openPicker()},
-              getNetworkFile: (url) => {_homeViewModel?.getNetworkFile(url)},
+              openPicker: () => {_homeViewModel.openPicker()},
+              getNetworkFile: (url) => {_homeViewModel.getNetworkFile(url)},
             ),
           );
         }));
