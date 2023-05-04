@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:istream/src/models/channel.dart';
 import 'package:istream/src/services/norris_joke_service.dart';
 import 'package:istream/src/services/parse_m3u_service.dart';
@@ -36,11 +35,12 @@ class HomeViewModel extends ChangeNotifier {
 
   void getNetworkFile(String url) async {
     _preferencesService.addMultipleChannels(await _parseM3UService.link(url));
+    getChannels();
     notifyListeners();
   }
 
   void getChannels() async {
-    _allChannels += await _preferencesService.getChannels();
+    _allChannels = await _preferencesService.getChannels();
     channels = _allChannels;
     initData = true;
     notifyListeners();

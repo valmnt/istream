@@ -1,8 +1,6 @@
-import 'package:istream/src/models/playlist.dart';
-
 class Channel {
-  const Channel(this.playlists, this.title);
+  const Channel(this.link, this.title);
 
-  final Playlist playlists;
+  final String link;
   final String title;
 }

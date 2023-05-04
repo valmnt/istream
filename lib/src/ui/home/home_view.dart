@@ -119,7 +119,7 @@ class HomeState extends State<HomeView> {
                               // print("VIEIIEIEIEIWWW ${index}");
                               return ChannelCard(
                                 title: viewModel.channels[index].title,
-                                url: viewModel.channels[index].playlists.link,
+                                url: viewModel.channels[index].link,
                               );
                             },
                           ),
