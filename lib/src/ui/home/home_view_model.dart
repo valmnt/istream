@@ -40,7 +40,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void getChannels() async {
-    _allChannels += await _preferencesService.getChannels();
+    _allChannels = await _preferencesService.getChannels();
     channels = _allChannels;
     initData = true;
     notifyListeners();
