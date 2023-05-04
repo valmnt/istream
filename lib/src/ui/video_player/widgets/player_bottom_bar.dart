@@ -45,7 +45,7 @@ class PlayerBottomBar extends StatelessWidget {
             if (isLive)
               SizedBox(
                   width: MediaQuery.of(context).size.width * 0.75,
-                  child: const Align(
+                  child: Align(
                       alignment: Alignment.center,
                       child: Text(
                         "Live 🔴",
@@ -59,7 +59,7 @@ class PlayerBottomBar extends StatelessWidget {
                     progressBarColor: primary,
                     thumbColor: primary,
                     baseBarColor: Colors.grey.withOpacity(0.8),
-                    timeLabelTextStyle: const TextStyle(color: secondary),
+                    timeLabelTextStyle: TextStyle(color: secondary),
                     progress: progression,
                     total: totalProgression,
                     onSeek: onSeek),

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
-import 'package:istream/src/resources/colors.dart';
 import 'package:istream/src/shared/loader.dart';
 import 'package:istream/src/ui/video_player/video_player_view_model.dart';
 import 'package:istream/src/ui/video_player/widgets/player_bottom_bar.dart';
 import 'package:istream/src/ui/video_player/widgets/player_top_bar.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 class VideoPlayerView extends StatefulWidget {
@@ -48,12 +46,6 @@ class VideoPlayerState extends State<VideoPlayerView> {
 
   @override
   void dispose() async {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.portraitUp
-    ]);
     super.dispose();
     await _vlcPlayerController.dispose();
   }
@@ -100,8 +92,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                   title: widget.title,
                                   backButtonIcon: Icons.close,
                                   onBackButtonPressed: () => {
-                                    _vlcPlayerController.pause(),
-                                    Navigator.of(context).pop()
+                                    onPop(),
                                   },
                                 ));
                           })),
@@ -136,7 +127,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                       isLoaded) {
                                     WidgetsBinding.instance
                                         .addPostFrameCallback((_) {
-                                      Navigator.of(context).pop();
+                                      onPop();
                                     });
                                   }
                                   return Visibility(
@@ -172,5 +163,12 @@ class VideoPlayerState extends State<VideoPlayerView> {
                 ),
               ));
         }));
+  }
+
+  void onPop() {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+    _vlcPlayerController.pause();
+    Navigator.of(context).pop();
   }
 }
