@@ -1,16 +1,22 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:istream/src/models/channel.dart';
+import 'package:istream/src/services/norris_joke_service.dart';
 import 'package:istream/src/services/parse_m3u_service.dart';
 import 'package:istream/src/services/preferences_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final PreferencesService _preferencesService = PreferencesService();
   final ParseM3UService _parseM3UService = ParseM3UService();
+  final NorrisJokeService _norrisJokeService = NorrisJokeService();
 
-  late List<Channel> channelList = [];
+  List<Channel> channels = [];
+  List<Channel> _allChannels = [];
+  bool initData = false;
+  String input = "";
 
   void openPicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -34,7 +40,25 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void getChannels() async {
-    channelList += await _preferencesService.getChannels();
+    _allChannels += await _preferencesService.getChannels();
+    channels = _allChannels;
+    initData = true;
     notifyListeners();
+  }
+
+  void search(String input) {
+    this.input = input.toLowerCase();
+    var newChannels = _allChannels
+        .where((channel) => channel.title.toLowerCase().contains(this.input))
+        .toList();
+
+    if (!listEquals(channels, newChannels)) {
+      channels = newChannels;
+      notifyListeners();
+    }
+  }
+
+  Future<String> fetchJokeForFunnyError() async {
+    return await _norrisJokeService.fetchNorrisJoke();
   }
 }

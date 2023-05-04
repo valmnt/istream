@@ -69,7 +69,7 @@ class AddM3U extends StatelessWidget {
                               foregroundColor: secondary,
                               automaticallyImplyLeading: false,
                               title: const Text('Add channels'),
-                              bottom: const TabBar(
+                              bottom: TabBar(
                                 tabs: tabs,
                                 indicatorColor: secondary,
                               ),
