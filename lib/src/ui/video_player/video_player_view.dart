@@ -166,9 +166,9 @@ class VideoPlayerState extends State<VideoPlayerView> {
   }
 
   void onPop() {
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     _vlcPlayerController.pause();
     Navigator.of(context).pop();
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   }
 }
