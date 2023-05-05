@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:istream/src/managers/responsive_manager.dart';
 import 'package:istream/src/resources/colors.dart';
 import 'package:istream/src/ui/home/widgets/add_m3u.dart';
 import 'package:istream/src/ui/home/widgets/channel_card.dart';
@@ -59,8 +60,13 @@ class HomeState extends State<HomeView> {
                 ),
                 SliverToBoxAdapter(
                     child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20, bottom: 10, left: 10, right: 10),
+                  padding: EdgeInsets.only(
+                      top: 20,
+                      bottom: 30,
+                      left: ResponsiveManager.instance
+                          .responsiveMultiplicator(context, 10, 1, 4, 40),
+                      right: ResponsiveManager.instance
+                          .responsiveMultiplicator(context, 10, 1, 4, 40)),
                   child: SearchBar(
                       onChanged: (input) => {_homeViewModel.search(input)}),
                 )),
@@ -109,10 +115,14 @@ class HomeState extends State<HomeView> {
                         );
                       } else {
                         return SliverGrid.count(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10.0,
-                          crossAxisSpacing: 10.0,
-                          childAspectRatio: 0.75,
+                          crossAxisCount: ResponsiveManager.instance
+                              .responsiveSelector(context, 2, 3, 5)
+                              .toInt(),
+                          mainAxisSpacing: ResponsiveManager.instance
+                              .responsiveMultiplicator(context, 10, 3, 4, 10),
+                          crossAxisSpacing: ResponsiveManager.instance
+                              .responsiveMultiplicator(context, 10, 3, 4, 10),
+                          childAspectRatio: 0.7,
                           children: List.generate(
                             viewModel.channels.length,
                             (index) {
