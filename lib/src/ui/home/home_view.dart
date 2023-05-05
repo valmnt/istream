@@ -116,10 +116,11 @@ class HomeState extends State<HomeView> {
                           children: List.generate(
                             viewModel.channels.length,
                             (index) {
-                              // print("VIEIIEIEIEIWWW ${index}");
                               return ChannelCard(
                                 title: viewModel.channels[index].title,
                                 url: viewModel.channels[index].link,
+                                onDelete: () =>
+                                    {viewModel.deleteChannel(index)},
                               );
                             },
                           ),

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app_popup_menu/app_popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:istream/src/resources/colors.dart';
 import 'package:istream/src/ui/video_player/video_player_view.dart';
@@ -7,8 +8,13 @@ import 'package:istream/src/ui/video_player/video_player_view.dart';
 class ChannelCard extends StatelessWidget {
   final String title;
   final String url;
+  final Function() onDelete;
 
-  const ChannelCard({super.key, required this.title, required this.url});
+  const ChannelCard(
+      {super.key,
+      required this.title,
+      required this.url,
+      required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +52,49 @@ class ChannelCard extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                 child: Container(
-                  color: Colors.black.withOpacity(0.5),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: secondary,
-                          fontSize: 18,
+                    color: Colors.black.withOpacity(0.5),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: AppPopupMenu<int>(
+                            menuItems: const [
+                              PopupMenuItem(
+                                value: 0,
+                                child: Text('Delete'),
+                              ),
+                            ],
+                            initialValue: 0,
+                            onSelected: (int value) {
+                              if (value == 0) {
+                                onDelete();
+                              }
+                            },
+                            elevation: 5,
+                            icon: const Icon(Icons.more_vert_sharp),
+                            offset: const Offset(0, 45),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            color: primary,
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            child: Center(
+                              child: Text(
+                                title,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: secondary,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            )),
+                      ],
+                    )),
               ),
             ),
           ),

@@ -58,6 +58,12 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
+  void deleteChannel(int index) {
+    _preferencesService.deleteChannel(channels[index]);
+    channels.removeAt(index);
+    notifyListeners();
+  }
+
   Future<String> fetchJokeForFunnyError() async {
     return await _norrisJokeService.fetchNorrisJoke();
   }
