@@ -37,11 +37,6 @@ class VideoPlayerState extends State<VideoPlayerView> {
 
     _positionStream = Stream.periodic(const Duration(milliseconds: 500),
         (_) => _vlcPlayerController.value.position);
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
   }
 
   @override
@@ -168,7 +163,5 @@ class VideoPlayerState extends State<VideoPlayerView> {
   void onPop() {
     _vlcPlayerController.pause();
     Navigator.of(context).pop();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   }
 }

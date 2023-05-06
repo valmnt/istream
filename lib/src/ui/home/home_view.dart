@@ -7,6 +7,7 @@ import 'package:istream/src/ui/home/widgets/channel_card.dart';
 import 'package:istream/src/ui/home/widgets/empty_list.dart';
 import 'package:istream/src/ui/home/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'home_view_model.dart';
 
 class HomeView extends StatefulWidget {
@@ -18,13 +19,6 @@ class HomeView extends StatefulWidget {
 
 class HomeState extends State<HomeView> {
   late HomeViewModel _homeViewModel;
-
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +57,18 @@ class HomeState extends State<HomeView> {
                   padding: EdgeInsets.only(
                       top: 20,
                       bottom: 30,
-                      left: ResponsiveManager.instance
-                          .responsiveMultiplicator(context, 10, 1, 4, 40),
-                      right: ResponsiveManager.instance
-                          .responsiveMultiplicator(context, 10, 1, 4, 40)),
+                      left: ResponsiveBreakpoints.of(context).orientation ==
+                              Orientation.portrait
+                          ? ResponsiveManager.instance
+                              .responsiveMultiplicator(context, 10, 1, 4, 40)
+                          : ResponsiveManager.instance
+                              .responsiveMultiplicator(context, 10, 4, 4, 40),
+                      right: ResponsiveBreakpoints.of(context).orientation ==
+                              Orientation.portrait
+                          ? ResponsiveManager.instance
+                              .responsiveMultiplicator(context, 10, 1, 4, 40)
+                          : ResponsiveManager.instance
+                              .responsiveMultiplicator(context, 10, 4, 4, 40)),
                   child: SearchBar(
                       onChanged: (input) => {_homeViewModel.search(input)}),
                 )),
@@ -100,7 +102,6 @@ class HomeState extends State<HomeView> {
                                       text:
                                           "Sorry, we couldn't find what you're looking for...😢"));
                             } else if (snapshot.hasData) {
-                              // Afficher les données si elles ont été récupérées avec succès
                               return SliverToBoxAdapter(
                                   child: EmptyList(
                                       text:
@@ -115,9 +116,15 @@ class HomeState extends State<HomeView> {
                         );
                       } else {
                         return SliverGrid.count(
-                          crossAxisCount: ResponsiveManager.instance
-                              .responsiveSelector(context, 2, 3, 5)
-                              .toInt(),
+                          crossAxisCount:
+                              ResponsiveBreakpoints.of(context).orientation ==
+                                      Orientation.portrait
+                                  ? ResponsiveManager.instance
+                                      .responsiveSelector(context, 2, 3, 5)
+                                      .toInt()
+                                  : ResponsiveManager.instance
+                                      .responsiveSelector(context, 5, 3, 5)
+                                      .toInt(),
                           mainAxisSpacing: ResponsiveManager.instance
                               .responsiveMultiplicator(context, 10, 3, 4, 10),
                           crossAxisSpacing: ResponsiveManager.instance
