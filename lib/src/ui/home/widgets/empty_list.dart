@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:istream/src/resources/colors.dart';
+import 'package:istream/src/shared/colors.dart';
 
 class EmptyList extends StatelessWidget {
   final String text;

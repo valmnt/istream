@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:istream/src/resources/colors.dart';
+import 'package:istream/src/shared/colors.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 class Loader extends StatelessWidget {

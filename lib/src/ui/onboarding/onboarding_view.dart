@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
-import 'package:istream/src/resources/colors.dart';
+import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/ui/home/home_view.dart';
 import 'package:istream/src/ui/onboarding/onboarding_view_model.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:istream/src/managers/responsive_manager.dart';
-import 'package:istream/src/resources/colors.dart';
+import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/ui/home/widgets/add_m3u.dart';
 import 'package:istream/src/ui/home/widgets/channel_card.dart';
 import 'package:istream/src/ui/home/widgets/empty_list.dart';

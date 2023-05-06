@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:app_popup_menu/app_popup_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:istream/src/resources/colors.dart';
+import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/ui/video_player/video_player_view.dart';
 
 class ChannelCard extends StatelessWidget {
