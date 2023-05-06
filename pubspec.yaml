@@ -44,6 +44,7 @@ dependencies:
   app_popup_menu: ^1.0.0
   responsive_framework: ^1.0.0
   flutter_onboarding_slider: ^1.0.9
+  flutter_native_splash: ^2.2.19
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -62,6 +63,10 @@ flutter_launcher_icons:
   macos:
     generate: true
     image_path: "assets/icon.png"
+
+flutter_native_splash:
+  color: "#1ED760"
+  image: assets/icon.png
 
 dev_dependencies:
   flutter_test:
