@@ -84,12 +84,9 @@ class VideoPlayerState extends State<VideoPlayerView> {
                             return Visibility(
                                 visible: viewModel.showOverlay,
                                 child: PlayerTopBar(
-                                  title: widget.title,
-                                  backButtonIcon: Icons.close,
-                                  onBackButtonPressed: () => {
-                                    onPop(),
-                                  },
-                                ));
+                                    title: widget.title,
+                                    backButtonIcon: Icons.close,
+                                    onBackButtonPressed: onPop));
                           })),
                       Align(
                         alignment: Alignment.bottomCenter,
@@ -113,8 +110,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                   }
                                   if (!isLoaded) isLoaded = true;
                                   if (_vlcPlayerController
-                                                  .value.duration.inSeconds -
-                                              1 ==
+                                              .value.duration.inSeconds ==
                                           snapshot.data?.inSeconds &&
                                       _vlcPlayerController
                                               .value.duration.inSeconds !=
