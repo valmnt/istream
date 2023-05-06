@@ -43,6 +43,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   app_popup_menu: ^1.0.0
   responsive_framework: ^1.0.0
+  flutter_onboarding_slider: ^1.0.9
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -80,6 +81,9 @@ dev_dependencies:
 flutter:
   assets:
       - assets/images/play.jpg
+      - assets/images/developer.png
+      - assets/images/download.png
+      - assets/images/organize.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
