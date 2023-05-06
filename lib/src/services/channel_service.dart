@@ -1,7 +1,7 @@
 import 'package:istream/src/models/channel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PreferencesService {
+class ChannelService {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   void _addChannel(Channel channel) async {
