@@ -77,7 +77,8 @@ class HomeState extends State<HomeView> {
                   sliver: Consumer<HomeViewModel>(
                     builder: (context, viewModel, child) {
                       if (viewModel.channels.isEmpty &&
-                          viewModel.input.isEmpty) {
+                          viewModel.input.isEmpty &&
+                          viewModel.initData) {
                         return const SliverToBoxAdapter(
                           child: EmptyList(
                             text:
@@ -85,7 +86,8 @@ class HomeState extends State<HomeView> {
                           ),
                         );
                       } else if (viewModel.channels.isEmpty &&
-                          viewModel.input.isNotEmpty) {
+                          viewModel.input.isNotEmpty &&
+                          viewModel.initData) {
                         return FutureBuilder<String>(
                           future: viewModel.fetchJokeForFunnyError(),
                           builder: (BuildContext context,
