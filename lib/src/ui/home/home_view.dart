@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:istream/src/managers/responsive_manager.dart';
 import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/shared/loader.dart';
@@ -157,15 +158,16 @@ class HomeState extends State<HomeView> {
               ),
               floatingActionButton:
                   Consumer<HomeViewModel>(builder: (context, viewModel, child) {
-                if (viewModel.isLoading) {
-                  return Container();
-                } else {
+                if (!viewModel.isLoading &&
+                    MediaQuery.of(context).orientation !=
+                        Orientation.landscape) {
                   return AddM3U(
                     isLoading: viewModel.isLoading,
                     openPicker: () => {viewModel.openPicker()},
                     getNetworkFile: (url) => {viewModel.getNetworkFile(url)},
                   );
                 }
+                return Container();
               }));
         }));
   }
