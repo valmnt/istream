@@ -31,17 +31,18 @@ class PlayerBottomBar extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
-              child: IconButton(
-                color: secondary,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                icon: isPlaying
-                    ? const Icon(Icons.pause)
-                    : const Icon(Icons.play_arrow),
-                onPressed: onPlayPause,
+            if (!isLive)
+              SizedBox(
+                child: IconButton(
+                  color: secondary,
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  icon: isPlaying
+                      ? const Icon(Icons.pause)
+                      : const Icon(Icons.play_arrow),
+                  onPressed: onPlayPause,
+                ),
               ),
-            ),
             if (isLive)
               SizedBox(
                   width: MediaQuery.of(context).size.width * 0.75,
@@ -50,7 +51,9 @@ class PlayerBottomBar extends StatelessWidget {
                       child: Text(
                         "Live 🔴",
                         style: TextStyle(
-                            color: secondary, fontWeight: FontWeight.bold),
+                            color: secondary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
                       )))
             else
               SizedBox(

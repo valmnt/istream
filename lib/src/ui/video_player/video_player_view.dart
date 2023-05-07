@@ -107,15 +107,14 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                     return const Center(
                                       child: Loader(width: 50, height: 52),
                                     );
-                                  }
-                                  if (!isLoaded) isLoaded = true;
-                                  if (_vlcPlayerController
-                                              .value.duration.inSeconds ==
-                                          snapshot.data?.inSeconds &&
-                                      _vlcPlayerController
-                                              .value.duration.inSeconds !=
-                                          0 &&
-                                      isLoaded) {
+                                  } else if (!isLoaded &&
+                                      snapshot.data !=
+                                          const Duration(seconds: 0)) {
+                                    isLoaded = true;
+                                  } else if (isLoaded &&
+                                      snapshot.data ==
+                                          const Duration(seconds: 0) &&
+                                      !_vlcPlayerController.value.isPlaying) {
                                     WidgetsBinding.instance
                                         .addPostFrameCallback((_) {
                                       onPop();
@@ -125,10 +124,15 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                       visible: viewModel.showOverlay,
                                       child: PlayerBottomBar(
                                         isLive: _vlcPlayerController
-                                                    .value.duration ==
-                                                const Duration(seconds: 0) &&
-                                            snapshot.data !=
-                                                const Duration(seconds: 0),
+                                                        .value.duration ==
+                                                    const Duration(
+                                                        seconds: 0) &&
+                                                snapshot.data !=
+                                                    const Duration(
+                                                        seconds: 0) ||
+                                            snapshot.data! >
+                                                _vlcPlayerController
+                                                    .value.duration,
                                         totalProgression:
                                             _vlcPlayerController.value.duration,
                                         progression: snapshot.data ??
