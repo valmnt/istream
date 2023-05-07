@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/ui/home/home_view.dart';
 import 'package:istream/src/ui/onboarding/onboarding_view_model.dart';
 
-class OnboardingView extends StatelessWidget {
+class OnboardingView extends StatefulWidget {
+  const OnboardingView({Key? key}) : super(key: key);
+
+  @override
+  OnboardingViewState createState() => OnboardingViewState();
+}
+
+class OnboardingViewState extends State<OnboardingView> {
   final OnboardingViewModel _onboardingViewModel = OnboardingViewModel();
 
-  OnboardingView({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
