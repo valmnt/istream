@@ -88,7 +88,7 @@ class HomeState extends State<HomeView> {
                           return const SliverToBoxAdapter(
                             child: EmptyList(
                               text:
-                                  "You haven't added any M3U files... \nAdd one to access your content!",
+                                  "You haven't added any M3U source... \nAdd one to access your content!",
                             ),
                           );
                         } else if (viewModel.channels.isEmpty &&
