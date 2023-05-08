@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/shared/loader.dart';
 import 'package:istream/src/ui/home/home_view.dart';
 import 'package:istream/src/ui/onboarding/onboarding_view.dart';
@@ -20,18 +21,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'IStream',
       home: Scaffold(
-        body: FutureBuilder(
-            future: getOnboardingCompleted(),
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Loader(width: 50, height: 50);
-              } else if (snapshot.data ?? false) {
-                return const HomeView();
-              } else {
-                return OnboardingView();
-              }
-            }),
-      ),
+          backgroundColor: tertiary,
+          body: SafeArea(
+            child: FutureBuilder(
+                future: getOnboardingCompleted(),
+                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Loader(width: 50, height: 50);
+                  } else if (snapshot.data ?? false) {
+                    return const HomeView();
+                  } else {
+                    return const OnboardingView();
+                  }
+                }),
+          )),
       debugShowCheckedModeBanner: false,
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,

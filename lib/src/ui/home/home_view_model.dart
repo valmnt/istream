@@ -15,6 +15,7 @@ class HomeViewModel extends ChangeNotifier {
   List<Channel> channels = [];
   List<Channel> _allChannels = [];
   bool initData = false;
+  bool isLoading = false;
   String input = "";
 
   void openPicker() async {
@@ -24,24 +25,37 @@ class HomeViewModel extends ChangeNotifier {
     );
 
     if (result != null) {
-      File file = File(result.files.single.path ?? "");
-      _channelsService.addMultipleChannels(await _parseM3UService.file(file));
-      getChannels();
+      isLoading = true;
+      notifyListeners();
+      Future.delayed(const Duration(seconds: 1), () async {
+        File file = File(result.files.single.path ?? "");
+        _channelsService.addMultipleChannels(await _parseM3UService.file(file));
+        getChannels();
+      });
     } else {
       // User canceled the picker
     }
   }
 
   void getNetworkFile(String url) async {
-    _channelsService.addMultipleChannels(await _parseM3UService.link(url));
-    getChannels();
+    isLoading = true;
     notifyListeners();
+    Future.delayed(const Duration(seconds: 1), () async {
+      _channelsService.addMultipleChannels(await _parseM3UService.link(url));
+      getChannels();
+    });
   }
 
   void getChannels() async {
     _allChannels = await _channelsService.getChannels();
     channels = _allChannels;
-    initData = true;
+    if (isLoading && initData) {
+      isLoading = false;
+    }
+
+    if (!initData) {
+      initData = true;
+    }
     notifyListeners();
   }
 
