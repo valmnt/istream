@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:istream/src/managers/responsive_manager.dart';
 import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/shared/loader.dart';

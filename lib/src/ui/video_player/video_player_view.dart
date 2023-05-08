@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:istream/src/shared/loader.dart';
 import 'package:istream/src/ui/video_player/video_player_view_model.dart';
