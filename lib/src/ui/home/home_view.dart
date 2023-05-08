@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:istream/src/managers/responsive_manager.dart';
 import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/shared/loader.dart';
-import 'package:istream/src/ui/home/widgets/add_m3u.dart';
+import 'package:istream/src/ui/home/widgets/upload_data.dart';
 import 'package:istream/src/ui/home/widgets/channel_card.dart';
 import 'package:istream/src/ui/home/widgets/empty_list.dart';
 import 'package:istream/src/ui/home/widgets/search_bar.dart';
@@ -158,10 +158,8 @@ class HomeState extends State<HomeView> {
               ),
               floatingActionButton:
                   Consumer<HomeViewModel>(builder: (context, viewModel, child) {
-                if (!viewModel.isLoading &&
-                    MediaQuery.of(context).orientation !=
-                        Orientation.landscape) {
-                  return AddM3U(
+                if (!viewModel.isLoading) {
+                  return UploadData(
                     isLoading: viewModel.isLoading,
                     openPicker: () => {viewModel.openPicker()},
                     getNetworkFile: (url) => {viewModel.getNetworkFile(url)},
