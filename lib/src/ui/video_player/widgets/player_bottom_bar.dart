@@ -4,7 +4,10 @@ import 'package:istream/src/shared/colors.dart';
 
 class PlayerBottomBar extends StatelessWidget {
   final Function()? onPlayPause;
+  final Function(ThumbDragDetails)? onDragStart;
+  final Function()? onDragEnd;
   final Function(Duration)? onSeek;
+
   final bool isLive;
   final bool isPlaying;
   final Duration totalProgression;
@@ -15,6 +18,8 @@ class PlayerBottomBar extends StatelessWidget {
       required this.isLive,
       required this.onPlayPause,
       required this.onSeek,
+      required this.onDragStart,
+      required this.onDragEnd,
       required this.isPlaying,
       required this.totalProgression,
       required this.progression})
@@ -59,13 +64,16 @@ class PlayerBottomBar extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.75,
                 child: ProgressBar(
-                    progressBarColor: primary,
-                    thumbColor: primary,
-                    baseBarColor: Colors.grey.withOpacity(0.8),
-                    timeLabelTextStyle: TextStyle(color: secondary),
-                    progress: progression,
-                    total: totalProgression,
-                    onSeek: onSeek),
+                  progressBarColor: primary,
+                  thumbColor: primary,
+                  baseBarColor: Colors.grey.withOpacity(0.8),
+                  timeLabelTextStyle: TextStyle(color: secondary),
+                  progress: progression,
+                  total: totalProgression,
+                  onSeek: onSeek,
+                  onDragStart: onDragStart,
+                  onDragEnd: onDragEnd,
+                ),
               )
           ],
         ),

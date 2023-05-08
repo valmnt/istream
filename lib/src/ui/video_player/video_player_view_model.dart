@@ -6,6 +6,8 @@ class VideoPlayerViewModel extends ChangeNotifier {
   bool _isPaused = true;
   bool _isDismissed = false;
   bool showOverlay = false;
+  bool isLoaded = false;
+  bool isDragged = false;
   Timer? timer;
 
   bool get isPaused => _isPaused;
@@ -36,7 +38,7 @@ class VideoPlayerViewModel extends ChangeNotifier {
       showOverlay = true;
       notifyListeners();
       await Future.delayed(const Duration(seconds: 4));
-      if (!_isDismissed) {
+      if (!_isDismissed && !isDragged) {
         showOverlay = false;
         notifyListeners();
       }
