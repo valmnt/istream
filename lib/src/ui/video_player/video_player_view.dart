@@ -117,38 +117,43 @@ class VideoPlayerState extends State<VideoPlayerView> {
                                     _vlcPlayerController.stop();
                                     _vlcPlayerController.play();
                                   }
-                                  return PlayerBottomBar(
-                                    isLive: _vlcPlayerController
-                                                    .value.duration ==
-                                                const Duration(seconds: 0) &&
-                                            snapshot.data !=
-                                                const Duration(seconds: 0) ||
-                                        snapshot.data! >
+                                  return Visibility(
+                                      visible: viewModel.showOverlay,
+                                      child: PlayerBottomBar(
+                                        isLive: _vlcPlayerController
+                                                        .value.duration ==
+                                                    const Duration(
+                                                        seconds: 0) &&
+                                                snapshot.data !=
+                                                    const Duration(
+                                                        seconds: 0) ||
+                                            snapshot.data! >
+                                                _vlcPlayerController
+                                                    .value.duration,
+                                        totalProgression:
                                             _vlcPlayerController.value.duration,
-                                    totalProgression:
-                                        _vlcPlayerController.value.duration,
-                                    progression: snapshot.data ??
-                                        const Duration(seconds: 0),
-                                    isPlaying: viewModel.isPaused,
-                                    onPlayPause: () {
-                                      viewModel.isPaused
-                                          ? _vlcPlayerController.pause()
-                                          : _vlcPlayerController.play();
+                                        progression: snapshot.data ??
+                                            const Duration(seconds: 0),
+                                        isPlaying: viewModel.isPaused,
+                                        onPlayPause: () {
+                                          viewModel.isPaused
+                                              ? _vlcPlayerController.pause()
+                                              : _vlcPlayerController.play();
 
-                                      viewModel.togglePause();
-                                    },
-                                    onSeek: (duration) {
-                                      _vlcPlayerController.seekTo(duration);
-                                    },
-                                    onDragStart: (details) => {
-                                      viewModel.isDragged = true,
-                                    },
-                                    onDragEnd: () => {
-                                      viewModel.isDragged = false,
-                                      viewModel.showOverlay = false,
-                                      viewModel.toggleOverlay()
-                                    },
-                                  );
+                                          viewModel.togglePause();
+                                        },
+                                        onSeek: (duration) {
+                                          _vlcPlayerController.seekTo(duration);
+                                        },
+                                        onDragStart: (details) => {
+                                          viewModel.isDragged = true,
+                                        },
+                                        onDragEnd: () => {
+                                          viewModel.isDragged = false,
+                                          viewModel.showOverlay = false,
+                                          viewModel.toggleOverlay()
+                                        },
+                                      ));
                                 },
                               ));
                         }),
