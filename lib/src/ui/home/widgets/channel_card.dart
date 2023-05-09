@@ -16,8 +16,6 @@ class ChannelCard extends StatelessWidget {
       required this.url,
       required this.onDelete});
 
-  void reponsiveWidth() {}
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
