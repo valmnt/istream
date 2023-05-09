@@ -17,8 +17,8 @@ class VideoPlayerView extends StatefulWidget {
 }
 
 class VideoPlayerState extends State<VideoPlayerView> {
-  late VlcPlayerController _vlcPlayerController;
-  late final Stream<Duration> _positionStream;
+  late final VlcPlayerController _vlcPlayerController;
+  late Stream<Duration> _positionStream;
 
   @override
   void initState() {

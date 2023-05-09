@@ -80,8 +80,8 @@ class HomeState extends State<HomeView> {
                       builder: (context, viewModel, child) {
                         if (viewModel.isLoading) {
                           return const SliverFillRemaining(
-                              child: Center(
-                                  child: Loader(width: 100, height: 100)));
+                              child:
+                                  Center(child: Loader(width: 50, height: 52)));
                         } else if (viewModel.channels.isEmpty &&
                             viewModel.input.isEmpty &&
                             viewModel.initData) {

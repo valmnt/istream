@@ -45,7 +45,7 @@ class UploadData extends StatelessWidget {
                 _modal(context),
                 Visibility(
                   visible: isLoading,
-                  child: const Loader(width: 100, height: 100),
+                  child: const Loader(width: 50, height: 52),
                 ),
               ],
             );
