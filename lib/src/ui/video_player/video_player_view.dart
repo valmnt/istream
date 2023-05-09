@@ -38,6 +38,7 @@ class VideoPlayerState extends State<VideoPlayerView> {
 
   @override
   void dispose() async {
+    _videoPlayerViewModel.timer?.cancel();
     super.dispose();
     await _vlcPlayerController.dispose();
   }

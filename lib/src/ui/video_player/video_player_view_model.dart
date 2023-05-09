@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class VideoPlayerViewModel extends ChangeNotifier {
   bool _isPaused = true;
-  bool _isDismissed = false;
   bool showOverlay = false;
   bool isLoaded = false;
   bool isDragged = false;
@@ -21,13 +20,6 @@ class VideoPlayerViewModel extends ChangeNotifier {
     toggleOverlay();
   }
 
-  @override
-  void dispose() {
-    _isDismissed = true;
-    timer = null;
-    super.dispose();
-  }
-
   void togglePause() {
     _isPaused = !_isPaused;
     notifyListeners();
@@ -37,11 +29,12 @@ class VideoPlayerViewModel extends ChangeNotifier {
     if (!showOverlay) {
       showOverlay = true;
       notifyListeners();
-      await Future.delayed(const Duration(seconds: 4));
-      if (!_isDismissed && !isDragged) {
-        showOverlay = false;
-        notifyListeners();
-      }
+      timer = Timer(const Duration(seconds: 3), () {
+        if (!isDragged) {
+          showOverlay = false;
+          notifyListeners();
+        }
+      });
     }
   }
 }
