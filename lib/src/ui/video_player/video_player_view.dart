@@ -17,7 +17,6 @@ class VideoPlayerView extends StatefulWidget {
 }
 
 class VideoPlayerState extends State<VideoPlayerView> {
-  late VideoPlayerViewModel _videoPlayerViewModel;
   late VlcPlayerController _vlcPlayerController;
   late final Stream<Duration> _positionStream;
 
@@ -38,7 +37,6 @@ class VideoPlayerState extends State<VideoPlayerView> {
 
   @override
   void dispose() async {
-    _videoPlayerViewModel.timer?.cancel();
     super.dispose();
     await _vlcPlayerController.dispose();
   }
@@ -48,10 +46,12 @@ class VideoPlayerState extends State<VideoPlayerView> {
     return ChangeNotifierProvider<VideoPlayerViewModel>(
         create: (_) => VideoPlayerViewModel(),
         child: Builder(builder: (BuildContext privateContext) {
-          _videoPlayerViewModel =
-              Provider.of<VideoPlayerViewModel>(privateContext, listen: true);
           return GestureDetector(
-              onTap: () => {_videoPlayerViewModel.toggleOverlay()},
+              onTap: () => {
+                    Provider.of<VideoPlayerViewModel>(privateContext,
+                            listen: false)
+                        .toggleOverlay()
+                  },
               child: Scaffold(
                 backgroundColor: Colors.black,
                 body: Center(
@@ -71,7 +71,8 @@ class VideoPlayerState extends State<VideoPlayerView> {
                           child: Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
-                        color: _videoPlayerViewModel.showOverlay
+                        color: Provider.of<VideoPlayerViewModel>(privateContext)
+                                .showOverlay
                             ? Colors.black.withOpacity(0.7)
                             : Colors.transparent,
                       )),

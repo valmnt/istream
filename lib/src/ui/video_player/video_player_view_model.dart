@@ -20,6 +20,12 @@ class VideoPlayerViewModel extends ChangeNotifier {
     toggleOverlay();
   }
 
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   void togglePause() {
     _isPaused = !_isPaused;
     notifyListeners();

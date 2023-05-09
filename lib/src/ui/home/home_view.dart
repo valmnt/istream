@@ -18,17 +18,14 @@ class HomeView extends StatefulWidget {
 }
 
 class HomeState extends State<HomeView> {
-  late HomeViewModel _homeViewModel;
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeViewModel>(
         create: (context) => HomeViewModel(),
         child: Builder(builder: (BuildContext privateContext) {
-          _homeViewModel =
-              Provider.of<HomeViewModel>(privateContext, listen: true);
-          if (_homeViewModel.channels.isEmpty && !_homeViewModel.initData) {
-            _homeViewModel.getChannels();
+          if (Provider.of<HomeViewModel>(privateContext).channels.isEmpty &&
+              !Provider.of<HomeViewModel>(privateContext).initData) {
+            Provider.of<HomeViewModel>(privateContext).getChannels();
           }
           return Scaffold(
               backgroundColor: tertiary,
@@ -71,7 +68,11 @@ class HomeState extends State<HomeView> {
                                 .responsiveMultiplicator(
                                     context, 10, 4, 4, 40)),
                     child: SearchBar(
-                        onChanged: (input) => {_homeViewModel.search(input)}),
+                        onChanged: (input) => {
+                              Provider.of<HomeViewModel>(privateContext,
+                                      listen: false)
+                                  .search(input)
+                            }),
                   )),
                   SliverPadding(
                     padding: const EdgeInsets.all(5.0),
