@@ -30,7 +30,7 @@ class UploadData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.large(
+    return FloatingActionButton(
       onPressed: () {
         showModalBottomSheet<void>(
           context: context,
