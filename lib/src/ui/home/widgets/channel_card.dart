@@ -62,7 +62,6 @@ class ChannelCard extends StatelessWidget {
                             child: Text('Delete'),
                           ),
                         ],
-                        initialValue: 0,
                         onSelected: (int value) {
                           if (value == 0) {
                             onDelete();
