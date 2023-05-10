@@ -45,7 +45,7 @@ class UploadData extends StatelessWidget {
                 _modal(context),
                 Visibility(
                   visible: isLoading,
-                  child: const Loader(width: 100, height: 100),
+                  child: const Loader(width: 50, height: 52),
                 ),
               ],
             );
@@ -90,7 +90,7 @@ class UploadData extends StatelessWidget {
                     : ResponsiveManager.instance.responsiveMultiplicator(
                         context, MediaQuery.of(context).size.height, 1, 1, 1),
                 child: DefaultTabController(
-                  initialIndex: 1,
+                  initialIndex: 0,
                   length: tabs.length,
                   child: Scaffold(
                     backgroundColor: Colors.transparent,

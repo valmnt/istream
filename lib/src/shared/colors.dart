@@ -1,5 +1,5 @@
 import 'package:flutter_brand_palettes/flutter_brand_palettes.dart';
 
-var primary = const Spotify.green().color;
-var secondary = const Spotify.white().color;
-var tertiary = const Spotify.black().color;
+final primary = const Spotify.green().color;
+final secondary = const Spotify.white().color;
+final tertiary = const Spotify.black().color;

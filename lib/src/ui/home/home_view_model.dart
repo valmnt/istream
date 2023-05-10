@@ -71,10 +71,10 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
-  void deleteChannel(int index) {
-    _channelsService.deleteChannel(channels[index]);
-    _allChannels.remove(channels[index]);
-    channels.removeAt(index);
+  void deleteChannel(Channel channel) {
+    _channelsService.deleteChannel(channel);
+    _allChannels.remove(channel);
+    channels.remove(channel);
     notifyListeners();
   }
 

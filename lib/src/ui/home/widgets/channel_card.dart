@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:app_popup_menu/app_popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:istream/src/shared/colors.dart';
-import 'package:istream/src/ui/video_player/video_player_view.dart';
 
 class ChannelCard extends StatelessWidget {
   final String title;
@@ -20,11 +19,13 @@ class ChannelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => VideoPlayerView(
-                  url: url,
-                  title: title,
-                )))
+        Navigator.of(context).pushNamed(
+          "/player",
+          arguments: {
+            'videoUrl': url,
+            'title': title,
+          },
+        )
       },
       child: Container(
         width: MediaQuery.of(context).size.width,

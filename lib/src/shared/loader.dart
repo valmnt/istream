@@ -3,8 +3,8 @@ import 'package:istream/src/shared/colors.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 class Loader extends StatelessWidget {
-  final int width;
-  final int height;
+  final double width;
+  final double height;
 
   const Loader({
     super.key,
@@ -15,8 +15,8 @@ class Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 50,
-        height: 52,
+        width: width,
+        height: height,
         child: LoadingIndicator(
           indicatorType: Indicator.circleStrokeSpin,
           colors: [primary],

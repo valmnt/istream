@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:istream/src/shared/colors.dart';
-import 'package:istream/src/ui/home/home_view.dart';
 import 'package:istream/src/ui/onboarding/onboarding_view_model.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -44,8 +43,7 @@ class OnboardingViewState extends State<OnboardingView> {
       ),
       onFinish: () {
         _onboardingViewModel.setOnboardingCompleted();
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeView()));
+        Navigator.of(context).pushReplacementNamed("/home");
       },
       skipTextButton: Text(
         'Skip',

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class PlayerTopBar extends StatelessWidget {
   final String title;
-  final IconData? backButtonIcon;
-  final Function()? onBackButtonPressed;
+  final IconData backButtonIcon;
+  final Function() onBackButtonPressed;
 
   const PlayerTopBar({
     super.key,
     required this.title,
-    this.backButtonIcon,
-    this.onBackButtonPressed,
+    required this.backButtonIcon,
+    required this.onBackButtonPressed,
   });
 
   @override

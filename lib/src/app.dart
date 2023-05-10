@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:istream/src/shared/colors.dart';
 import 'package:istream/src/shared/loader.dart';
 import 'package:istream/src/ui/home/home_view.dart';
+import 'package:istream/src/ui/home/home_view_model.dart';
 import 'package:istream/src/ui/onboarding/onboarding_view.dart';
+import 'package:istream/src/ui/video_player/video_player_view.dart';
+import 'package:istream/src/ui/video_player/video_player_view_model.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +33,10 @@ class MyApp extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Loader(width: 50, height: 50);
                   } else if (snapshot.data ?? false) {
-                    return const HomeView();
+                    return ChangeNotifierProvider(
+                      create: (context) => HomeViewModel(),
+                      child: const HomeView(),
+                    );
                   } else {
                     return const OnboardingView();
                   }
@@ -44,6 +51,16 @@ class MyApp extends StatelessWidget {
           const Breakpoint(start: 1201, end: 1920, name: DESKTOP),
         ],
       ),
+      routes: {
+        '/home': (context) => ChangeNotifierProvider(
+              create: (context) => HomeViewModel(),
+              child: const HomeView(),
+            ),
+        '/player': (context) => ChangeNotifierProvider(
+              create: (context) => VideoPlayerViewModel(),
+              child: const VideoPlayerView(),
+            )
+      },
     );
   }
 }
