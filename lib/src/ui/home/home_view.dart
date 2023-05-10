@@ -142,6 +142,7 @@ class HomeState extends State<HomeView> {
                         viewModel.channels.length,
                         (index) {
                           return ChannelCard(
+                            key: Key(viewModel.channels[index].link),
                             title: viewModel.channels[index].title,
                             url: viewModel.channels[index].link,
                             onDelete: () => {viewModel.deleteChannel(index)},
