@@ -44,8 +44,7 @@ class OnboardingViewState extends State<OnboardingView> {
       ),
       onFinish: () {
         _onboardingViewModel.setOnboardingCompleted();
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeView()));
+        Navigator.of(context).pushReplacementNamed("/home");
       },
       skipTextButton: Text(
         'Skip',
