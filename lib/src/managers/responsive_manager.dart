@@ -4,8 +4,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 class ResponsiveManager {
   static final ResponsiveManager instance = ResponsiveManager._internal();
 
-  factory ResponsiveManager() => instance;
-
   ResponsiveManager._internal();
 
   double responsiveMultiplicator(
