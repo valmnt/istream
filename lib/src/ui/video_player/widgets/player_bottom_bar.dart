@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:istream/src/shared/colors.dart';
 
 class PlayerBottomBar extends StatelessWidget {
-  final Function()? onPlayPause;
-  final Function(ThumbDragDetails)? onDragStart;
-  final Function()? onDragEnd;
-  final Function(Duration)? onSeek;
+  final Function() onPlayPause;
+  final Function(ThumbDragDetails) onDragStart;
+  final Function() onDragEnd;
+  final Function(Duration) onSeek;
 
   final bool isLive;
   final bool isPlaying;
